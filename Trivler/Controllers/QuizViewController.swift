@@ -12,7 +12,7 @@ class QuizViewController: UIViewController {
     @IBOutlet var options: [UIButton]!
     @IBOutlet weak var questionLabel: UILabel!
     
-    var answerIsCorrect = true
+    var correctAnswer = "Option 1"
     
     override func viewWillAppear(_ animated: Bool) {
         
@@ -54,8 +54,8 @@ class QuizViewController: UIViewController {
         let touchPosition = touch?.location(in: view)
         
         
-        
-        if answerIsCorrect {
+        // Checks 
+        if correctAnswer == sender.titleLabel?.text {
             displayImage(sysName: "checkmark", location: touchPosition!)
             changeButton(sender, bgColor: .green)
         } else {
@@ -69,6 +69,8 @@ class QuizViewController: UIViewController {
         
         DispatchQueue.main.asyncAfter(deadline: .now() + seconds) {
             self.options.forEach { $0.isEnabled = true }
+            self.questionLabel.slideInFromRight()
+            self.questionLabel.text = "What was the name of the first front-wheel-drive car produced by Datsun (now Nissan)?"
         }
         
     }
@@ -76,10 +78,21 @@ class QuizViewController: UIViewController {
     
     @IBAction func exitButtonClicked(_ sender: UIBarButtonItem) {
         
-        let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let vc = mainStoryboard.instantiateViewController(withIdentifier: "HomeScreenViewController") as! HomeScreenViewController
-        navigationController?.pushViewController(vc, animated: true)
+        let refreshAlert = UIAlertController(title: "Exit Quiz?", message: "All of your progress will be lost.", preferredStyle: UIAlertController.Style.alert)
         
+        refreshAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action: UIAlertAction!) in
+          
+            // Ensure that timer is still running, if needed
+            
+          }))
+        
+        refreshAlert.addAction(UIAlertAction(title: "Ok", style: .destructive, handler: { (action: UIAlertAction!) in
+            let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+            let vc = mainStoryboard.instantiateViewController(withIdentifier: "HomeScreenViewController") as! HomeScreenViewController
+            self.navigationController?.pushViewController(vc, animated: true)
+          }))
+
+        present(refreshAlert, animated: true, completion: nil)
         
         // Reset quiz variables
         categoryName = nil
@@ -87,6 +100,9 @@ class QuizViewController: UIViewController {
         
         numberOfQuestions = 10
         timeForQuestion = 15
+        
+        
+        
         
     }
     

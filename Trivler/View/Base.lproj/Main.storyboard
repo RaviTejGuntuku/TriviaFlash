@@ -564,16 +564,16 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="8vH-5t-kvs">
-                                <rect key="frame" x="20" y="54" width="335" height="583"/>
+                                <rect key="frame" x="20" y="64" width="335" height="573"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="10" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pRJ-tY-Asy">
-                                        <rect key="frame" x="0.0" y="0.0" width="335" height="29.5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="335" height="32"/>
                                         <fontDescription key="fontDescription" name="SFCompactDisplay-Regular" family="SF Compact Display" pointSize="18"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Which iconic album cover features the pulsar waves of CP 1919 placed in the center of the cover?" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="x0B-EW-oUz">
-                                        <rect key="frame" x="0.0" y="49.5" width="335" height="177.5"/>
+                                        <rect key="frame" x="0.0" y="52" width="335" height="165"/>
                                         <constraints>
                                             <constraint firstAttribute="height" relation="lessThanOrEqual" constant="464.5" id="2fd-Rh-prf"/>
                                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="80" id="3wb-c6-7po"/>
@@ -583,7 +583,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="30" translatesAutoresizingMaskIntoConstraints="NO" id="bJf-pc-4I5">
-                                        <rect key="frame" x="0.0" y="247" width="335" height="336"/>
+                                        <rect key="frame" x="0.0" y="237" width="335" height="336"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="zCt-89-woR">
                                                 <rect key="frame" x="0.0" y="0.0" width="335" height="301"/>
@@ -655,7 +655,7 @@
                             <constraint firstItem="lBE-PQ-F7h" firstAttribute="trailing" secondItem="8vH-5t-kvs" secondAttribute="trailing" constant="20" id="7SK-GM-iJc"/>
                             <constraint firstAttribute="bottom" secondItem="8vH-5t-kvs" secondAttribute="bottom" constant="30" id="HZm-W7-D1M"/>
                             <constraint firstItem="8vH-5t-kvs" firstAttribute="leading" secondItem="lBE-PQ-F7h" secondAttribute="leading" constant="20" id="QRr-Fl-T4N"/>
-                            <constraint firstItem="8vH-5t-kvs" firstAttribute="top" secondItem="lBE-PQ-F7h" secondAttribute="top" constant="10" id="csm-Th-dgq"/>
+                            <constraint firstItem="8vH-5t-kvs" firstAttribute="top" secondItem="lBE-PQ-F7h" secondAttribute="top" constant="20" id="csm-Th-dgq"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="&lt;CATEGORY&gt; Trivia!" id="l8g-Sy-3Cv">

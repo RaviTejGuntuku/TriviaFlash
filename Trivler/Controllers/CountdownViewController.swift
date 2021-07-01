@@ -10,8 +10,7 @@ import UIKit
 class CountdownViewController: UIViewController {
 
     @IBOutlet weak var countdownLabel: UILabel!
-     
-    // Timer variables
+    
     var timeRemaining: Int = 3
     var timer: Timer!
     

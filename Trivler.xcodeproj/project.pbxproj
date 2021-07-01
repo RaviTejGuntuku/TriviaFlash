@@ -22,6 +22,7 @@
 		03C68854267FC47200C2B760 /* TrivlerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03C68853267FC47200C2B760 /* TrivlerTests.swift */; };
 		03C6885F267FC47200C2B760 /* TrivlerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03C6885E267FC47200C2B760 /* TrivlerUITests.swift */; };
 		03EBD8FC268BF83B003E6EBC /* LICENSE.md in Resources */ = {isa = PBXBuildFile; fileRef = 03EBD8FB268BF83B003E6EBC /* LICENSE.md */; };
+		03EBD8FE268CB09D003E6EBC /* SlideAnimationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03EBD8FD268CB09D003E6EBC /* SlideAnimationExtension.swift */; };
 		03FE9D7B2684FDB60089FEA0 /* SF-Pro-Text-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 03FE9D492684FCB50089FEA0 /* SF-Pro-Text-Regular.otf */; };
 		03FE9D7C2684FDB60089FEA0 /* SF-Pro-Text-BlackItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 03FE9D542684FCB60089FEA0 /* SF-Pro-Text-BlackItalic.otf */; };
 		03FE9D7D2684FDB60089FEA0 /* SF-Pro-Text-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 03FE9D562684FCB60089FEA0 /* SF-Pro-Text-Light.otf */; };
@@ -127,6 +128,7 @@
 		03C68860267FC47200C2B760 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		03EBD8FA268BF82B003E6EBC /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = SOURCE_ROOT; };
 		03EBD8FB268BF83B003E6EBC /* LICENSE.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = LICENSE.md; sourceTree = SOURCE_ROOT; };
+		03EBD8FD268CB09D003E6EBC /* SlideAnimationExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideAnimationExtension.swift; sourceTree = "<group>"; };
 		03FE9D452684FCB50089FEA0 /* SF-Pro-Text-HeavyItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "SF-Pro-Text-HeavyItalic.otf"; path = "../../../../../../SF Pro Text/SF Pro Text/SF-Pro-Text-HeavyItalic.otf"; sourceTree = "<group>"; };
 		03FE9D462684FCB50089FEA0 /* SF-Pro-Text-Black.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "SF-Pro-Text-Black.otf"; path = "../../../../../../SF Pro Text/SF Pro Text/SF-Pro-Text-Black.otf"; sourceTree = "<group>"; };
 		03FE9D472684FCB50089FEA0 /* SF-Pro-Text-RegularItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "SF-Pro-Text-RegularItalic.otf"; path = "../../../../../../SF Pro Text/SF Pro Text/SF-Pro-Text-RegularItalic.otf"; sourceTree = "<group>"; };
@@ -271,6 +273,7 @@
 				03EBD8FB268BF83B003E6EBC /* LICENSE.md */,
 				03EBD8FA268BF82B003E6EBC /* README.md */,
 				03C6883E267FC47000C2B760 /* SceneDelegate.swift */,
+				03EBD8FD268CB09D003E6EBC /* SlideAnimationExtension.swift */,
 				03C6883C267FC47000C2B760 /* AppDelegate.swift */,
 				039D8AD5268BBEEA00498AE5 /* CenterCGRect.swift */,
 				03FE9D442684FCA50089FEA0 /* fonts */,
@@ -568,6 +571,7 @@
 			files = (
 				03A8D6A02688E85200CDA027 /* CountdownViewController.swift in Sources */,
 				039D8AD6268BBEEB00498AE5 /* CenterCGRect.swift in Sources */,
+				03EBD8FE268CB09D003E6EBC /* SlideAnimationExtension.swift in Sources */,
 				03AE2F272688FDAD00FC2733 /* QuizViewController.swift in Sources */,
 				031DA8C62681336A00863C6F /* CategoryViewController.swift in Sources */,
 				03C68841267FC47000C2B760 /* HomeScreenViewController.swift in Sources */,
