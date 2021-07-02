@@ -12,21 +12,21 @@ extension UIView {
     // slideFromLeft, slideRight, slideLeftToRight, etc. are great alternative names
     func slideInFromRight(_ duration: TimeInterval = 1.0, completionDelegate: CAAnimationDelegate? = nil) {
         // Create a CATransition animation
-        let slideInFromLeftTransition = CATransition()
+        let slideInFromRightTransition = CATransition()
         
         // Set its callback delegate to the completionDelegate that was provided (if any)
         if let delegate: CAAnimationDelegate = completionDelegate {
-            slideInFromLeftTransition.delegate = delegate
+            slideInFromRightTransition.delegate = delegate
         }
         
         // Customize the animation's properties
-        slideInFromLeftTransition.type = CATransitionType.push
-        slideInFromLeftTransition.subtype = CATransitionSubtype.fromRight
-        slideInFromLeftTransition.duration = duration
-        slideInFromLeftTransition.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
-        slideInFromLeftTransition.fillMode = CAMediaTimingFillMode.removed
+        slideInFromRightTransition.type = CATransitionType.push
+        slideInFromRightTransition.subtype = CATransitionSubtype.fromRight
+        slideInFromRightTransition.duration = duration
+        slideInFromRightTransition.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
+        slideInFromRightTransition.fillMode = CAMediaTimingFillMode.removed
         
         // Add the animation to the View's layer
-        self.layer.add(slideInFromLeftTransition, forKey: "slideInFromLeftTransition")
+        self.layer.add(slideInFromRightTransition, forKey: "slideInFromRightTransition")
     }
 }

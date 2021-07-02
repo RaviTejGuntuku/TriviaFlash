@@ -12,7 +12,12 @@ class QuizViewController: UIViewController {
     @IBOutlet var options: [UIButton]!
     @IBOutlet weak var questionLabel: UILabel!
     
-    var correctAnswer = "Option 1"
+    let fadeTime: Double = 0.5
+    
+    var triviaManager = TriviaManager()
+    
+    var questionNumber: Int = 1
+    var triviaQuestions: [Question]?
     
     override func viewWillAppear(_ animated: Bool) {
         
@@ -24,6 +29,8 @@ class QuizViewController: UIViewController {
             navigationController?.navigationBar.barTintColor = safeColor
         }
         
+        
+        
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -34,6 +41,11 @@ class QuizViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        triviaManager.delegate = self
+        triviaManager.fetchQuestions()
+        
+        
+        
         self.options.forEach { $0.layer.cornerRadius = 20 }
         self.options.forEach { $0.layer.masksToBounds = true }
         
@@ -42,7 +54,6 @@ class QuizViewController: UIViewController {
         questionLabel.textColor = .white
         questionLabel.adjustsFontSizeToFitWidth = true
         questionLabel.translatesAutoresizingMaskIntoConstraints = false
-        
         
     }
     
@@ -53,28 +64,36 @@ class QuizViewController: UIViewController {
         let touch = touches?.first
         let touchPosition = touch?.location(in: view)
         
+        let iconName: String
+        let buttonColor: UIColor
         
-        // Checks 
-        if correctAnswer == sender.titleLabel?.text {
-            displayImage(sysName: "checkmark", location: touchPosition!)
-            changeButton(sender, bgColor: .green)
+        let animationTime = 1.5
+        
+        let chosenAnswer = sender.titleLabel!.text!
+        print(chosenAnswer)
+        
+        print(triviaQuestions![questionNumber - 1].correctAnswer)
+        
+        // Checks whether answer is correct or not
+        if triviaQuestions![questionNumber - 1].correctAnswer == chosenAnswer {
+            iconName = "checkmark"
+            buttonColor = .green
         } else {
-            displayImage(sysName: "xmark", location: touchPosition!)
-            changeButton(sender, bgColor: .red)
+            iconName = "xmark"
+            buttonColor = .red
         }
         
-        let seconds = 2.0
+        displayIcon(iconName, location: touchPosition!, seconds: animationTime)
+        changeButton(sender, bgColor: buttonColor, seconds: animationTime)
         
-        self.options.forEach { $0.isEnabled = false }
+        questionNumber += 1
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + seconds) {
-            self.options.forEach { $0.isEnabled = true }
-            self.questionLabel.slideInFromRight()
-            self.questionLabel.text = "What was the name of the first front-wheel-drive car produced by Datsun (now Nissan)?"
+        DispatchQueue.main.asyncAfter(deadline: .now() + animationTime - fadeTime) {
+            self.displayQuestion(question: (self.triviaQuestions?[self.questionNumber - 1].question)!, transitionTime: 0.5)
+            self.changeOptions(answerChoices: (self.triviaQuestions?[self.questionNumber - 1].options)!)
         }
         
     }
-    
     
     @IBAction func exitButtonClicked(_ sender: UIBarButtonItem) {
         
@@ -90,40 +109,61 @@ class QuizViewController: UIViewController {
             let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
             let vc = mainStoryboard.instantiateViewController(withIdentifier: "HomeScreenViewController") as! HomeScreenViewController
             self.navigationController?.pushViewController(vc, animated: true)
+            
+            
+            // Reset Quiz Variables
+            categoryName = nil
+            categoryColor = nil
+            
+            numberOfQuestions = 10
+            timeForQuestion = 15
+            
           }))
-
+        
         present(refreshAlert, animated: true, completion: nil)
         
-        // Reset quiz variables
-        categoryName = nil
-        categoryColor = nil
+    }
+    
+    func displayQuestion(question: String, transitionTime: Double? = 1.0) {
         
-        numberOfQuestions = 10
-        timeForQuestion = 15
+        if questionNumber != 1 {
+            self.questionLabel.slideInFromRight(TimeInterval(transitionTime!))
+        }
         
+        self.questionLabel.text = question
         
+    }
+    
+    func changeOptions(answerChoices: [String]) {
+        
+        for i in 0...answerChoices.count - 1 {
+//            options[i].titleLabel?.text = answerChoices[i]
+            
+            options[i].setTitle(answerChoices[i], for: .normal)
+        }
         
         
     }
     
-    func changeButton(_ button: UIButton, bgColor: UIColor) {
-        
-        let seconds = 2.0
+    func changeButton(_ button: UIButton, bgColor: UIColor, seconds: Double? = 2.0) {
         
         button.layer.borderWidth = 3.0
         button.layer.borderColor = .init(red: 255/255, green: 255/255, blue: 255/255, alpha: 1.0)
         button.backgroundColor = bgColor
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + seconds) {
+        self.options.forEach { $0.isEnabled = false }
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + seconds! - fadeTime) {
             
+            self.options.forEach { $0.isEnabled = true }
             button.layer.borderWidth = 0.0
             button.backgroundColor = UIColor(red: 246/255, green: 223/255, blue: 235/255, alpha: 0.5)
-            
+
         }
         
     }
     
-    func displayImage(sysName: String, location: CGPoint) {
+    func displayIcon(_ sysName: String, location: CGPoint, seconds: Double? = 2.0) {
         
         let image = UIImage(systemName: sysName)
         let imageView = UIImageView(image: image)
@@ -131,22 +171,38 @@ class QuizViewController: UIViewController {
         imageView.frame = CGRect(center: location, size: CGSize(width: 33, height: 33))
         view.addSubview(imageView)
         
-        UIView.animate(withDuration: 2, delay: 0.0, options: UIView.AnimationOptions.curveEaseIn, animations: {
+        UIView.animate(withDuration: TimeInterval(seconds! - 0.5), delay: 0.0, options: UIView.AnimationOptions.curveEaseIn, animations: {
                imageView.transform = CGAffineTransform.identity.scaledBy(x: 2, y: 2) // Scale your image
          }) { (finished) in
-            UIView.animate(withDuration: 0.5, delay: 0.0, options: UIView.AnimationOptions.curveEaseOut, animations: {
+            UIView.animate(withDuration: self.fadeTime, delay: 0.0, options: UIView.AnimationOptions.curveEaseOut, animations: {
                 imageView.alpha = 0.0
-          })
-        }
-        
-        let seconds = 2.5
-        DispatchQueue.main.asyncAfter(deadline: .now() + seconds) {
-            imageView.removeFromSuperview()
+            }) { (finished) in imageView.removeFromSuperview()}
         }
         
     }
     
 }
+
+extension QuizViewController: TriviaManagerDelegate {
+    
+    func didGetQuestions(_ triviaManager: TriviaManager, triviaModel: TriviaModel) {
+        
+        DispatchQueue.main.async {
+            self.triviaQuestions = triviaModel.questions
+            self.displayQuestion(question: (self.triviaQuestions?[self.questionNumber - 1].question)!)
+            self.changeOptions(answerChoices: (self.triviaQuestions?[self.questionNumber - 1].options)!)
+            
+        }
+        
+//        changeOptions(answerChoices: (triviaQuestions?[questionNumber - 1].options)!)
+        
+    }
+    
+    func didFailWithError(_ error: Error) {
+        print(error)
+    }
+}
+
 
 //@IBDesignable
 //class PlainHorizontalProgressBar: UIView {

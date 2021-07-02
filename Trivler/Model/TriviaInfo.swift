@@ -13,5 +13,4 @@ var categoryColor: UIColor?
 
 var numberOfQuestions: Int = 10
 var timeForQuestion: Int = 15
-    
 
