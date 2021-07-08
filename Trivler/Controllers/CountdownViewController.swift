@@ -11,15 +11,35 @@ class CountdownViewController: UIViewController {
 
     @IBOutlet weak var countdownLabel: UILabel!
     
-    var timeRemaining: Int = 3
+    var timeRemaining: Int = 3 {
+        didSet {
+            checkSegue()
+        }
+    }
     var timer: Timer!
+    
+    var triviaManager = TriviaManager()
+    
+    var triviaQuestions: [Question]?
+    var appError: Error?
+    
+    var shouldPerformSegue: Bool? {
+        didSet {
+            checkSegue()
+        }
+    }
     
     override var prefersStatusBarHidden: Bool {
         return true
     }
     
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        triviaManager.delegate = self
+        triviaManager.fetchQuestions()
         
         setNeedsStatusBarAppearanceUpdate()
         
@@ -51,10 +71,6 @@ class CountdownViewController: UIViewController {
             timer.invalidate()
             zoomInText(text: "Go!")
             
-            let seconds = 1.0
-            DispatchQueue.main.asyncAfter(deadline: .now() + seconds) {
-                self.performSegue(withIdentifier: "CountdownToQuiz", sender: self)
-            }
         }
         
     }
@@ -68,5 +84,44 @@ class CountdownViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         navigationController?.isNavigationBarHidden = false
     }
+    
+    func checkSegue() {
+        
+        if shouldPerformSegue! && timeRemaining == 1 {
+            let seconds = 2.0
+            DispatchQueue.main.asyncAfter(deadline: .now() + seconds) {
+                self.performSegue(withIdentifier: "CountdownToQuiz", sender: self)
+            }
+        }
+        
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        if segue.identifier == "CountdownToQuiz" {
+            let destinationVC = segue.destination as! QuizViewController
+            destinationVC.triviaQuestions = triviaQuestions
+        }
+        
+    }
 
+}
+
+
+extension CountdownViewController: TriviaManagerDelegate {
+    
+    func didGetQuestions(_ triviaManager: TriviaManager, triviaModel: TriviaModel) {
+        
+        DispatchQueue.main.async {
+            self.triviaQuestions = triviaModel.questions
+            self.shouldPerformSegue = true
+        }
+        
+    }
+    
+    func didFailWithError(_ error: Error) {
+        shouldPerformSegue = false
+        appError = error
+        print(appError ?? "Something went wrong.")
+    }
 }

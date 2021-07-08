@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		031DA8C62681336A00863C6F /* CategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 031DA8C52681336A00863C6F /* CategoryViewController.swift */; };
+		035B5DA026977BAF007AE98E /* CircularTimerBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 035B5D9F26977BAF007AE98E /* CircularTimerBar.swift */; };
 		03930C55268616610022BC8C /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03930C54268616610022BC8C /* SettingsViewController.swift */; };
 		039D8AD6268BBEEB00498AE5 /* CenterCGRect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 039D8AD5268BBEEA00498AE5 /* CenterCGRect.swift */; };
 		03A8D6A02688E85200CDA027 /* CountdownViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A8D69F2688E85200CDA027 /* CountdownViewController.swift */; };
@@ -110,6 +111,7 @@
 
 /* Begin PBXFileReference section */
 		031DA8C52681336A00863C6F /* CategoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryViewController.swift; sourceTree = "<group>"; };
+		035B5D9F26977BAF007AE98E /* CircularTimerBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularTimerBar.swift; sourceTree = "<group>"; };
 		03930C54268616610022BC8C /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		039D8AD5268BBEEA00498AE5 /* CenterCGRect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CenterCGRect.swift; path = Trivler/CenterCGRect.swift; sourceTree = SOURCE_ROOT; };
 		03A8D69F2688E85200CDA027 /* CountdownViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountdownViewController.swift; sourceTree = "<group>"; };
@@ -285,6 +287,7 @@
 				03EBD8FD268CB09D003E6EBC /* SlideAnimationExtension.swift */,
 				03C6883C267FC47000C2B760 /* AppDelegate.swift */,
 				039D8AD5268BBEEA00498AE5 /* CenterCGRect.swift */,
+				035B5D9F26977BAF007AE98E /* CircularTimerBar.swift */,
 				03FE9D442684FCA50089FEA0 /* fonts */,
 				031DA8C32681330000863C6F /* Model */,
 				031DA8C42681330B00863C6F /* View */,
@@ -588,6 +591,7 @@
 				03C68841267FC47000C2B760 /* HomeScreenViewController.swift in Sources */,
 				03EBD917268E8254003E6EBC /* TriviaModel.swift in Sources */,
 				03C6883D267FC47000C2B760 /* AppDelegate.swift in Sources */,
+				035B5DA026977BAF007AE98E /* CircularTimerBar.swift in Sources */,
 				03930C55268616610022BC8C /* SettingsViewController.swift in Sources */,
 				03AE2F2E26893CDD00FC2733 /* TriviaInfo.swift in Sources */,
 				03C6883F267FC47000C2B760 /* SceneDelegate.swift in Sources */,

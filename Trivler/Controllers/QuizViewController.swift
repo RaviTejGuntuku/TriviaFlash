@@ -5,21 +5,26 @@
 //  Created by Tej Guntuku on 6/27/21.
 //
 
+
 import UIKit
 
 class QuizViewController: UIViewController {
     
     @IBOutlet var options: [UIButton]!
     @IBOutlet weak var questionLabel: UILabel!
+    @IBOutlet weak var progressBar: UIProgressView!
+    @IBOutlet weak var timeRemainingLabel: UILabel!
+    @IBOutlet weak var timeRemainingCircle: PlainCircularProgressBar!
     
     let fadeTime: Double = 0.5
-    
-    var triviaManager = TriviaManager()
     
     var questionNumber: Int = 1
     var triviaQuestions: [Question]?
     
     override func viewWillAppear(_ animated: Bool) {
+        
+        self.displayQuestion(question: (self.triviaQuestions?[self.questionNumber - 1].question)!)
+        self.changeOptions(answerChoices: (self.triviaQuestions?[self.questionNumber - 1].options)!)
         
         if let safeName = categoryName {
             self.title = "\(safeName) Trivia!"
@@ -28,8 +33,6 @@ class QuizViewController: UIViewController {
         if let safeColor = categoryColor {
             navigationController?.navigationBar.barTintColor = safeColor
         }
-        
-        
         
     }
     
@@ -40,14 +43,28 @@ class QuizViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+                
+//        var timeView = UIView()
+//        timeView.frame = CGRect(center: CGPoint(x: 50, y: 50), size: CGSize(width: 20, height: 20))
+//        timeView.backgroundColor = .green
+//        view.addSubview(timeView)
         
-        triviaManager.delegate = self
-        triviaManager.fetchQuestions()
+        timeRemainingCircle.color = .green
         
+        progressBar.layer.cornerRadius = 5
+        progressBar.layer.masksToBounds = true
         
+        progressBar.layer.sublayers?[1].cornerRadius = 5
+        progressBar.subviews[1].clipsToBounds = true
         
-        self.options.forEach { $0.layer.cornerRadius = 20 }
+        self.options.forEach { $0.layer.cornerRadius = $0.frame.size.height * 20/64 }
         self.options.forEach { $0.layer.masksToBounds = true }
+        
+        self.options.forEach { $0.titleLabel?.font = .systemFont(ofSize: 24, weight: .regular)}
+        self.options.forEach { $0.titleLabel?.textAlignment = .left}
+        self.options.forEach { $0.titleLabel?.textColor = .white}
+        self.options.forEach { $0.titleLabel?.adjustsFontSizeToFitWidth = true}
+        self.options.forEach { $0.titleLabel?.translatesAutoresizingMaskIntoConstraints = false}
         
         questionLabel.font = .systemFont(ofSize: 24, weight: .bold)
         questionLabel.textAlignment = .left
@@ -56,7 +73,6 @@ class QuizViewController: UIViewController {
         questionLabel.translatesAutoresizingMaskIntoConstraints = false
         
     }
-    
     
     @IBAction func answerClicked(_ sender: UIButton, forEvent event: UIEvent) {
         
@@ -70,9 +86,9 @@ class QuizViewController: UIViewController {
         let animationTime = 1.5
         
         let chosenAnswer = sender.titleLabel!.text!
-        print(chosenAnswer)
-        
-        print(triviaQuestions![questionNumber - 1].correctAnswer)
+//        print(chosenAnswer)
+//
+//        print(triviaQuestions![questionNumber - 1].correctAnswer)
         
         // Checks whether answer is correct or not
         if triviaQuestions![questionNumber - 1].correctAnswer == chosenAnswer {
@@ -97,19 +113,20 @@ class QuizViewController: UIViewController {
     
     @IBAction func exitButtonClicked(_ sender: UIBarButtonItem) {
         
-        let refreshAlert = UIAlertController(title: "Exit Quiz?", message: "All of your progress will be lost.", preferredStyle: UIAlertController.Style.alert)
+        let refreshAlert = UIAlertController(title: "Quiz Paused", message: "Do you want to continue playing or exit the quiz?", preferredStyle: UIAlertController.Style.actionSheet)
         
-        refreshAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action: UIAlertAction!) in
+        refreshAlert.addAction(UIAlertAction(title: "Resume", style: .default, handler: { (action: UIAlertAction!) in
           
             // Ensure that timer is still running, if needed
             
           }))
         
-        refreshAlert.addAction(UIAlertAction(title: "Ok", style: .destructive, handler: { (action: UIAlertAction!) in
+        refreshAlert.addAction(UIAlertAction(title: "Exit", style: .default, handler: { (action: UIAlertAction!) in
             let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
             let vc = mainStoryboard.instantiateViewController(withIdentifier: "HomeScreenViewController") as! HomeScreenViewController
             self.navigationController?.pushViewController(vc, animated: true)
-            
+        
+        
             
             // Reset Quiz Variables
             categoryName = nil
@@ -124,12 +141,9 @@ class QuizViewController: UIViewController {
         
     }
     
-    func displayQuestion(question: String, transitionTime: Double? = 1.0) {
-        
-        if questionNumber != 1 {
-            self.questionLabel.slideInFromRight(TimeInterval(transitionTime!))
-        }
-        
+    func displayQuestion(question: String, transitionTime: Double? = 0.0) {
+
+        self.questionLabel.slideInFromRight(TimeInterval(transitionTime!))
         self.questionLabel.text = question
         
     }
@@ -182,27 +196,6 @@ class QuizViewController: UIViewController {
     }
     
 }
-
-extension QuizViewController: TriviaManagerDelegate {
-    
-    func didGetQuestions(_ triviaManager: TriviaManager, triviaModel: TriviaModel) {
-        
-        DispatchQueue.main.async {
-            self.triviaQuestions = triviaModel.questions
-            self.displayQuestion(question: (self.triviaQuestions?[self.questionNumber - 1].question)!)
-            self.changeOptions(answerChoices: (self.triviaQuestions?[self.questionNumber - 1].options)!)
-            
-        }
-        
-//        changeOptions(answerChoices: (triviaQuestions?[questionNumber - 1].options)!)
-        
-    }
-    
-    func didFailWithError(_ error: Error) {
-        print(error)
-    }
-}
-
 
 //@IBDesignable
 //class PlainHorizontalProgressBar: UIView {

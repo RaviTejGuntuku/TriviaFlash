@@ -52,17 +52,4 @@ class CategoryViewController: UIViewController {
         
     }
     
-//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//
-//        if segue.identifier == "CategoriesToSettings" {
-//
-//            let destinationVC = segue.destination as! SettingsViewController
-//
-//            destinationVC.quizInfo = quizInfo
-//
-//        
-//        }
-//
-//    }
-    
 }
