@@ -87,7 +87,7 @@ class CountdownViewController: UIViewController {
     
     func checkSegue() {
         
-        if shouldPerformSegue! && timeRemaining == 1 {
+        if shouldPerformSegue ?? false && timeRemaining == 1 {
             let seconds = 2.0
             DispatchQueue.main.asyncAfter(deadline: .now() + seconds) {
                 self.performSegue(withIdentifier: "CountdownToQuiz", sender: self)

@@ -15,11 +15,11 @@ class PlainCircularProgressBar: UIView {
     }
     @IBInspectable var ringWidth: CGFloat = 6
 
-    var progress: CGFloat = 0.75 {
+    var progress: CGFloat = 1.0 {
         didSet { setNeedsDisplay() }
     }
 
-    private var progressLayer = CAShapeLayer()
+    var progressLayer = CAShapeLayer()
     private var backgroundMask = CAShapeLayer()
 
     override init(frame: CGRect) {
@@ -43,16 +43,20 @@ class PlainCircularProgressBar: UIView {
         progressLayer.fillColor = nil
         layer.addSublayer(progressLayer)
         layer.transform = CATransform3DMakeRotation(CGFloat(90 * Double.pi / 180), 0, 0, -1)
+        
     }
 
     override func draw(_ rect: CGRect) {
+        
         let circlePath = UIBezierPath(ovalIn: rect.insetBy(dx: ringWidth / 2, dy: ringWidth / 2))
         backgroundMask.path = circlePath.cgPath
-
         progressLayer.path = circlePath.cgPath
         progressLayer.lineCap = .round
         progressLayer.strokeStart = 0
         progressLayer.strokeEnd = progress
         progressLayer.strokeColor = color?.cgColor
+        
     }
+    
+    
 }

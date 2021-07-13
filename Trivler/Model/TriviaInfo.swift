@@ -11,6 +11,6 @@ import UIKit
 var categoryName: String?
 var categoryColor: UIColor?
 
-var numberOfQuestions: Int = 10
+var numberOfQuestions: Int = 5
 var timeForQuestion: Int = 15
 

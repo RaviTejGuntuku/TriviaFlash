@@ -15,16 +15,32 @@ class QuizViewController: UIViewController {
     @IBOutlet weak var progressBar: UIProgressView!
     @IBOutlet weak var timeRemainingLabel: UILabel!
     @IBOutlet weak var timeRemainingCircle: PlainCircularProgressBar!
+    @IBOutlet weak var scoreLabel: UILabel!
     
     let fadeTime: Double = 0.5
+    let animationTime: Double = 1.5
     
     var questionNumber: Int = 1
     var triviaQuestions: [Question]?
     
+    var score = 0
+    
+    var timeRemaining: Int = timeForQuestion
+    var timer: Timer!
+    
+    var barTimeRemaining: Float = Float(timeForQuestion)
+    var barTimer: Timer!
+    
     override func viewWillAppear(_ animated: Bool) {
+        
+        print(questionNumber)
+        
+        scoreLabel.text = "Score: \(score)"
         
         self.displayQuestion(question: (self.triviaQuestions?[self.questionNumber - 1].question)!)
         self.changeOptions(answerChoices: (self.triviaQuestions?[self.questionNumber - 1].options)!)
+        
+        progressBar.progress = Float(questionNumber) - 1.0
         
         if let safeName = categoryName {
             self.title = "\(safeName) Trivia!"
@@ -49,7 +65,7 @@ class QuizViewController: UIViewController {
 //        timeView.backgroundColor = .green
 //        view.addSubview(timeView)
         
-        timeRemainingCircle.color = .green
+        startTimer()
         
         progressBar.layer.cornerRadius = 5
         progressBar.layer.masksToBounds = true
@@ -64,6 +80,7 @@ class QuizViewController: UIViewController {
         self.options.forEach { $0.titleLabel?.textAlignment = .left}
         self.options.forEach { $0.titleLabel?.textColor = .white}
         self.options.forEach { $0.titleLabel?.adjustsFontSizeToFitWidth = true}
+        self.options.forEach { $0.titleLabel?.numberOfLines = 2}
         self.options.forEach { $0.titleLabel?.translatesAutoresizingMaskIntoConstraints = false}
         
         questionLabel.font = .systemFont(ofSize: 24, weight: .bold)
@@ -80,33 +97,33 @@ class QuizViewController: UIViewController {
         let touch = touches?.first
         let touchPosition = touch?.location(in: view)
         
+//        let touchPositionInButton = (touch?.location(in: sender))!
+        
         let iconName: String
         let buttonColor: UIColor
         
-        let animationTime = 1.5
-        
         let chosenAnswer = sender.titleLabel!.text!
-//        print(chosenAnswer)
-//
-//        print(triviaQuestions![questionNumber - 1].correctAnswer)
         
         // Checks whether answer is correct or not
         if triviaQuestions![questionNumber - 1].correctAnswer == chosenAnswer {
             iconName = "checkmark"
             buttonColor = .green
+            score += 1
         } else {
             iconName = "xmark"
             buttonColor = .red
+//            revealCorrectAnswer(incorrectOption: sender, location: touchPositionInButton, animationTime: animationTime)
         }
+        
+        timer.invalidate()
+        barTimer.invalidate()
         
         displayIcon(iconName, location: touchPosition!, seconds: animationTime)
         changeButton(sender, bgColor: buttonColor, seconds: animationTime)
-        
-        questionNumber += 1
+        scoreLabel.text = "Score: \(score)"
         
         DispatchQueue.main.asyncAfter(deadline: .now() + animationTime - fadeTime) {
-            self.displayQuestion(question: (self.triviaQuestions?[self.questionNumber - 1].question)!, transitionTime: 0.5)
-            self.changeOptions(answerChoices: (self.triviaQuestions?[self.questionNumber - 1].options)!)
+            self.setUpForNextQuestion()
         }
         
     }
@@ -122,18 +139,18 @@ class QuizViewController: UIViewController {
           }))
         
         refreshAlert.addAction(UIAlertAction(title: "Exit", style: .default, handler: { (action: UIAlertAction!) in
+            
+            categoryName = nil
+            categoryColor = nil
+
+            self.questionNumber = 1
+
+            numberOfQuestions = 5
+            timeForQuestion = 15
+            
             let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
             let vc = mainStoryboard.instantiateViewController(withIdentifier: "HomeScreenViewController") as! HomeScreenViewController
             self.navigationController?.pushViewController(vc, animated: true)
-        
-        
-            
-            // Reset Quiz Variables
-            categoryName = nil
-            categoryColor = nil
-            
-            numberOfQuestions = 10
-            timeForQuestion = 15
             
           }))
         
@@ -142,21 +159,18 @@ class QuizViewController: UIViewController {
     }
     
     func displayQuestion(question: String, transitionTime: Double? = 0.0) {
-
-        self.questionLabel.slideInFromRight(TimeInterval(transitionTime!))
+        
+        questionLabel.slideInFromRight(TimeInterval(transitionTime!))
         self.questionLabel.text = question
         
     }
     
     func changeOptions(answerChoices: [String]) {
-        
         for i in 0...answerChoices.count - 1 {
 //            options[i].titleLabel?.text = answerChoices[i]
             
             options[i].setTitle(answerChoices[i], for: .normal)
         }
-        
-        
     }
     
     func changeButton(_ button: UIButton, bgColor: UIColor, seconds: Double? = 2.0) {
@@ -192,6 +206,128 @@ class QuizViewController: UIViewController {
                 imageView.alpha = 0.0
             }) { (finished) in imageView.removeFromSuperview()}
         }
+        
+    }
+    
+    func setUpForNextQuestion(animationTime: Double = 1.0) {
+        
+        questionNumber += 1
+        
+        UIView.animate(withDuration: animationTime, animations: {
+            self.progressBar.setProgress((Float(self.questionNumber - 1)) / Float(numberOfQuestions), animated: true)
+        }) { (finished) in
+            if self.questionNumber - 1 < numberOfQuestions {
+                
+                self.startTimer()
+                self.displayQuestion(question: (self.triviaQuestions?[self.questionNumber - 1].question)!, transitionTime: 0.5)
+                self.changeOptions(answerChoices: (self.triviaQuestions?[self.questionNumber - 1].options)!)
+                
+            } else {
+                UIView.animate(withDuration: animationTime, animations: {
+                    self.progressBar.setProgress((Float(self.questionNumber)) / Float(numberOfQuestions), animated: true)
+                }) { (finished) in
+                    self.questionLabel.text = "Done With Quiz!"
+                }
+            }
+        }
+
+    }
+    
+    func startTimer() {
+        
+        timeRemainingCircle.color = .green
+        timeRemaining = timeForQuestion
+        
+        barTimeRemaining = Float(timeForQuestion)
+        timeRemainingLabel.text = String(timeRemaining)
+        
+        timeRemainingCircle.progress = 1.0
+        
+        timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(step), userInfo: nil, repeats: true)
+        barTimer = Timer.scheduledTimer(timeInterval: 0.01, target: self, selector: #selector(stepBar), userInfo: nil, repeats: true)
+        
+    }
+    
+    @objc func step() {
+        
+        if timeRemaining > 0 {
+            timeRemaining -= 1
+            
+            timeRemainingLabel.text = String(timeRemaining)
+//            timeRemainingCircle.progress = CGFloat(barTimeRemaining) / CGFloat(timeForQuestion)
+            
+        } else {
+            timer.invalidate()
+            setUpForNextQuestion()
+        }
+        
+    }
+    
+    @objc func stepBar() {
+        
+        if barTimeRemaining > 0 {
+
+            barTimeRemaining -= 0.01
+            timeRemainingCircle.progress = CGFloat(barTimeRemaining) / CGFloat(timeForQuestion)
+
+        } else {
+            barTimer.invalidate()
+        }
+        
+        if barTimeRemaining < 3 {
+            timeRemainingCircle.color = .red
+        }
+        
+    }
+    
+//    func updateTimerProgress() {
+//
+//            let animation = CABasicAnimation(keyPath: "path")
+//            animation.duration = 2
+//
+//            timeRemainingCircle.progress = 0.0
+//
+//    }
+    
+    func revealCorrectAnswer(incorrectOption: UIButton? = nil, location: CGPoint?, animationTime: Double = 2.0) {
+        
+        let correctAnswerButton = getCorrectButton()
+        
+        var exactLocation: CGPoint?
+        
+        if let safeButton = correctAnswerButton {
+            
+            if let safeIncorrectButton = incorrectOption {
+                exactLocation = safeIncorrectButton.convert(location!, to: safeButton)
+            } else {
+                let correctOptionCenter = (correctAnswerButton?.center)!
+                exactLocation = view.convert(correctOptionCenter, to: safeButton)
+            }
+            
+            displayIcon("checkmark", location: exactLocation!, seconds: animationTime)
+            
+        } else {
+            print("Could not find correct answer!")
+        }
+        
+    }
+    
+    func getCorrectButton() -> UIButton? {
+        
+        var correctButton: UIButton?
+        
+        for i in 0...options.count - 1 {
+            
+            let optionTitleText = options[i].titleLabel!.text!
+            let correctAnswer = triviaQuestions![questionNumber - 1].correctAnswer
+            
+            if correctAnswer == optionTitleText {
+                correctButton = options[i]
+            }
+            
+        }
+        
+        return correctButton
         
     }
     
