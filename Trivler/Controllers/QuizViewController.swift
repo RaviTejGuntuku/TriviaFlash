@@ -35,7 +35,7 @@ class QuizViewController: UIViewController {
         
         print(questionNumber)
         
-        scoreLabel.text = "Score: \(score)"
+        scoreLabel.text = "Score: \(score)/\(numberOfQuestions)"
         
         self.displayQuestion(question: (self.triviaQuestions?[self.questionNumber - 1].question)!)
         self.changeOptions(answerChoices: (self.triviaQuestions?[self.questionNumber - 1].options)!)
@@ -91,11 +91,24 @@ class QuizViewController: UIViewController {
         
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        if segue.identifier == "QuizToResults" {
+            let destinationVC = segue.destination as! ResultsViewController
+            destinationVC.numberCorrect = score
+            destinationVC.totalQuestions = numberOfQuestions
+            self.endTimers()
+        }
+        
+    }
+    
     @IBAction func answerClicked(_ sender: UIButton, forEvent event: UIEvent) {
         
         let touches = event.touches(for: sender)
         let touch = touches?.first
         let touchPosition = touch?.location(in: view)
+        
+//        let touchPositionInButton = touch?.location(in: sender)
         
 //        let touchPositionInButton = (touch?.location(in: sender))!
         
@@ -112,15 +125,14 @@ class QuizViewController: UIViewController {
         } else {
             iconName = "xmark"
             buttonColor = .red
-//            revealCorrectAnswer(incorrectOption: sender, location: touchPositionInButton, animationTime: animationTime)
+            revealCorrectAnswer(animationTime: animationTime)
         }
         
-        timer.invalidate()
-        barTimer.invalidate()
+        endTimers()
         
         displayIcon(iconName, location: touchPosition!, seconds: animationTime)
         changeButton(sender, bgColor: buttonColor, seconds: animationTime)
-        scoreLabel.text = "Score: \(score)"
+        scoreLabel.text = "Score: \(score)/\(numberOfQuestions)"
         
         DispatchQueue.main.asyncAfter(deadline: .now() + animationTime - fadeTime) {
             self.setUpForNextQuestion()
@@ -140,13 +152,8 @@ class QuizViewController: UIViewController {
         
         refreshAlert.addAction(UIAlertAction(title: "Exit", style: .default, handler: { (action: UIAlertAction!) in
             
-            categoryName = nil
-            categoryColor = nil
-
-            self.questionNumber = 1
-
-            numberOfQuestions = 5
-            timeForQuestion = 15
+            self.endTimers()
+            resetVariables()
             
             let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
             let vc = mainStoryboard.instantiateViewController(withIdentifier: "HomeScreenViewController") as! HomeScreenViewController
@@ -155,6 +162,13 @@ class QuizViewController: UIViewController {
           }))
         
         present(refreshAlert, animated: true, completion: nil)
+        
+    }
+    
+    func endTimers() {
+        
+        timer.invalidate()
+        barTimer.invalidate()
         
     }
     
@@ -224,9 +238,12 @@ class QuizViewController: UIViewController {
                 
             } else {
                 UIView.animate(withDuration: animationTime, animations: {
-                    self.progressBar.setProgress((Float(self.questionNumber)) / Float(numberOfQuestions), animated: true)
+                    self.progressBar.setProgress(1.0, animated: true)
                 }) { (finished) in
-                    self.questionLabel.text = "Done With Quiz!"
+                    
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                        self.performSegue(withIdentifier: "QuizToResults", sender: self)
+                    }
                 }
             }
         }
@@ -258,6 +275,7 @@ class QuizViewController: UIViewController {
             
         } else {
             timer.invalidate()
+            revealCorrectAnswer()
             setUpForNextQuestion()
         }
         
@@ -280,31 +298,20 @@ class QuizViewController: UIViewController {
         
     }
     
-//    func updateTimerProgress() {
-//
-//            let animation = CABasicAnimation(keyPath: "path")
-//            animation.duration = 2
-//
-//            timeRemainingCircle.progress = 0.0
-//
-//    }
-    
-    func revealCorrectAnswer(incorrectOption: UIButton? = nil, location: CGPoint?, animationTime: Double = 2.0) {
+    func revealCorrectAnswer(incorrectButton: UIButton? = nil, touchCoordinates: CGPoint? = nil, animationTime: Double = 2.0) {
         
         let correctAnswerButton = getCorrectButton()
         
-        var exactLocation: CGPoint?
+        var exactLocation: CGPoint
         
         if let safeButton = correctAnswerButton {
             
-            if let safeIncorrectButton = incorrectOption {
-                exactLocation = safeIncorrectButton.convert(location!, to: safeButton)
-            } else {
-                let correctOptionCenter = (correctAnswerButton?.center)!
-                exactLocation = view.convert(correctOptionCenter, to: safeButton)
-            }
+            exactLocation = safeButton.superview!.convert(safeButton.center, to: self.view)
             
-            displayIcon("checkmark", location: exactLocation!, seconds: animationTime)
+            print(exactLocation)
+            
+            displayIcon("checkmark", location: exactLocation, seconds: animationTime)
+            changeButton(safeButton, bgColor: .green, seconds: animationTime)
             
         } else {
             print("Could not find correct answer!")
@@ -332,15 +339,3 @@ class QuizViewController: UIViewController {
     }
     
 }
-
-//@IBDesignable
-//class PlainHorizontalProgressBar: UIView {
-//    @IBInspectable var color: UIColor? = .gray
-//
-//    override func draw(_ rect: CGRect) {
-//        let backgroundMask = CAShapeLayer()
-//        backgroundMask.path = UIBezierPath(roundedRect: rect, cornerRadius: rect.height * 0.25).cgPath
-//        layer.mask = backgroundMask
-//    }
-//
-//}

@@ -9,11 +9,14 @@
 /* Begin PBXBuildFile section */
 		031DA8C62681336A00863C6F /* CategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 031DA8C52681336A00863C6F /* CategoryViewController.swift */; };
 		035B5DA026977BAF007AE98E /* CircularTimerBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 035B5D9F26977BAF007AE98E /* CircularTimerBar.swift */; };
+		035B5DA4269DE664007AE98E /* ResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 035B5DA3269DE664007AE98E /* ResultsViewController.swift */; };
+		035B5DA7269E0373007AE98E /* GIFImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 035B5DA6269E0373007AE98E /* GIFImageView.swift */; };
+		035B5DAB269E1BA2007AE98E /* Confetti.gif in Resources */ = {isa = PBXBuildFile; fileRef = 035B5DAA269E1BA2007AE98E /* Confetti.gif */; };
 		03930C55268616610022BC8C /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03930C54268616610022BC8C /* SettingsViewController.swift */; };
 		039D8AD6268BBEEB00498AE5 /* CenterCGRect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 039D8AD5268BBEEA00498AE5 /* CenterCGRect.swift */; };
 		03A8D6A02688E85200CDA027 /* CountdownViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A8D69F2688E85200CDA027 /* CountdownViewController.swift */; };
 		03AE2F272688FDAD00FC2733 /* QuizViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AE2F252688FDAD00FC2733 /* QuizViewController.swift */; };
-		03AE2F2E26893CDD00FC2733 /* TriviaInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AE2F2D26893CDD00FC2733 /* TriviaInfo.swift */; };
+		03AE2F2E26893CDD00FC2733 /* TriviaGlobalInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AE2F2D26893CDD00FC2733 /* TriviaGlobalInfo.swift */; };
 		03C6883D267FC47000C2B760 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03C6883C267FC47000C2B760 /* AppDelegate.swift */; };
 		03C6883F267FC47000C2B760 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03C6883E267FC47000C2B760 /* SceneDelegate.swift */; };
 		03C68841267FC47000C2B760 /* HomeScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03C68840267FC47000C2B760 /* HomeScreenViewController.swift */; };
@@ -112,11 +115,14 @@
 /* Begin PBXFileReference section */
 		031DA8C52681336A00863C6F /* CategoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryViewController.swift; sourceTree = "<group>"; };
 		035B5D9F26977BAF007AE98E /* CircularTimerBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularTimerBar.swift; sourceTree = "<group>"; };
+		035B5DA3269DE664007AE98E /* ResultsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultsViewController.swift; sourceTree = "<group>"; };
+		035B5DA6269E0373007AE98E /* GIFImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GIFImageView.swift; sourceTree = "<group>"; };
+		035B5DAA269E1BA2007AE98E /* Confetti.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = Confetti.gif; sourceTree = "<group>"; };
 		03930C54268616610022BC8C /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
-		039D8AD5268BBEEA00498AE5 /* CenterCGRect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CenterCGRect.swift; path = Trivler/CenterCGRect.swift; sourceTree = SOURCE_ROOT; };
+		039D8AD5268BBEEA00498AE5 /* CenterCGRect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CenterCGRect.swift; path = Trivler/Extensions/CenterCGRect.swift; sourceTree = SOURCE_ROOT; };
 		03A8D69F2688E85200CDA027 /* CountdownViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountdownViewController.swift; sourceTree = "<group>"; };
 		03AE2F252688FDAD00FC2733 /* QuizViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizViewController.swift; sourceTree = "<group>"; wrapsLines = 0; };
-		03AE2F2D26893CDD00FC2733 /* TriviaInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TriviaInfo.swift; sourceTree = "<group>"; };
+		03AE2F2D26893CDD00FC2733 /* TriviaGlobalInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TriviaGlobalInfo.swift; sourceTree = "<group>"; };
 		03C68839267FC47000C2B760 /* Trivler.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Trivler.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		03C6883C267FC47000C2B760 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		03C6883E267FC47000C2B760 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -233,6 +239,8 @@
 				03C68840267FC47000C2B760 /* HomeScreenViewController.swift */,
 				03A8D69F2688E85200CDA027 /* CountdownViewController.swift */,
 				03AE2F252688FDAD00FC2733 /* QuizViewController.swift */,
+				035B5DAA269E1BA2007AE98E /* Confetti.gif */,
+				035B5DA3269DE664007AE98E /* ResultsViewController.swift */,
 				03930C54268616610022BC8C /* SettingsViewController.swift */,
 				031DA8C52681336A00863C6F /* CategoryViewController.swift */,
 			);
@@ -242,7 +250,7 @@
 		031DA8C32681330000863C6F /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				03AE2F2D26893CDD00FC2733 /* TriviaInfo.swift */,
+				03AE2F2D26893CDD00FC2733 /* TriviaGlobalInfo.swift */,
 				03EBD912268E4567003E6EBC /* TriviaManager.swift */,
 				03EBD914268E78DF003E6EBC /* TriviaData.swift */,
 				03EBD916268E8254003E6EBC /* TriviaModel.swift */,
@@ -256,6 +264,17 @@
 				03C68842267FC47000C2B760 /* Main.storyboard */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		035B5DA5269E034A007AE98E /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				03EBD8FD268CB09D003E6EBC /* SlideAnimationExtension.swift */,
+				035B5DA6269E0373007AE98E /* GIFImageView.swift */,
+				039D8AD5268BBEEA00498AE5 /* CenterCGRect.swift */,
+				035B5D9F26977BAF007AE98E /* CircularTimerBar.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		03C68830267FC47000C2B760 = {
@@ -284,10 +303,8 @@
 				03EBD8FB268BF83B003E6EBC /* LICENSE.md */,
 				03EBD8FA268BF82B003E6EBC /* README.md */,
 				03C6883E267FC47000C2B760 /* SceneDelegate.swift */,
-				03EBD8FD268CB09D003E6EBC /* SlideAnimationExtension.swift */,
 				03C6883C267FC47000C2B760 /* AppDelegate.swift */,
-				039D8AD5268BBEEA00498AE5 /* CenterCGRect.swift */,
-				035B5D9F26977BAF007AE98E /* CircularTimerBar.swift */,
+				035B5DA5269E034A007AE98E /* Extensions */,
 				03FE9D442684FCA50089FEA0 /* fonts */,
 				031DA8C32681330000863C6F /* Model */,
 				031DA8C42681330B00863C6F /* View */,
@@ -546,6 +563,7 @@
 				03FE9DBE2684FFA20089FEA0 /* SF-Compact-Display-Thin.otf in Resources */,
 				03FE9DA82684FF620089FEA0 /* SF-Pro-Display-Bold.otf in Resources */,
 				03FE9D802684FDB60089FEA0 /* SF-Pro-Text-UltralightItalic.otf in Resources */,
+				035B5DAB269E1BA2007AE98E /* Confetti.gif in Resources */,
 				03FE9D892684FDB60089FEA0 /* SF-Pro-Text-Ultralight.otf in Resources */,
 				03FE9DBA2684FFA20089FEA0 /* SF-Compact-Display-Semibold.otf in Resources */,
 				03FE9D822684FDB60089FEA0 /* SF-Pro-Text-HeavyItalic.otf in Resources */,
@@ -582,6 +600,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				03EBD913268E4567003E6EBC /* TriviaManager.swift in Sources */,
+				035B5DA7269E0373007AE98E /* GIFImageView.swift in Sources */,
 				03A8D6A02688E85200CDA027 /* CountdownViewController.swift in Sources */,
 				039D8AD6268BBEEB00498AE5 /* CenterCGRect.swift in Sources */,
 				03EBD8FE268CB09D003E6EBC /* SlideAnimationExtension.swift in Sources */,
@@ -589,11 +608,12 @@
 				03AE2F272688FDAD00FC2733 /* QuizViewController.swift in Sources */,
 				031DA8C62681336A00863C6F /* CategoryViewController.swift in Sources */,
 				03C68841267FC47000C2B760 /* HomeScreenViewController.swift in Sources */,
+				035B5DA4269DE664007AE98E /* ResultsViewController.swift in Sources */,
 				03EBD917268E8254003E6EBC /* TriviaModel.swift in Sources */,
 				03C6883D267FC47000C2B760 /* AppDelegate.swift in Sources */,
 				035B5DA026977BAF007AE98E /* CircularTimerBar.swift in Sources */,
 				03930C55268616610022BC8C /* SettingsViewController.swift in Sources */,
-				03AE2F2E26893CDD00FC2733 /* TriviaInfo.swift in Sources */,
+				03AE2F2E26893CDD00FC2733 /* TriviaGlobalInfo.swift in Sources */,
 				03C6883F267FC47000C2B760 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
