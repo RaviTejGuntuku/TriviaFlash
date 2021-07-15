@@ -237,10 +237,10 @@ class QuizViewController: UIViewController {
                 self.changeOptions(answerChoices: (self.triviaQuestions?[self.questionNumber - 1].options)!)
                 
             } else {
+                self.options.forEach { $0.isEnabled = false }
                 UIView.animate(withDuration: animationTime, animations: {
                     self.progressBar.setProgress(1.0, animated: true)
                 }) { (finished) in
-                    
                     DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
                         self.performSegue(withIdentifier: "QuizToResults", sender: self)
                     }

@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import JellyGif
+import Lottie
 
 class ResultsViewController: UIViewController {
     
@@ -14,13 +16,12 @@ class ResultsViewController: UIViewController {
     @IBOutlet weak var adviceLabel: UILabel!
     
     var numberCorrect: Int?
-    var totalQuestions: Int? {
-        didSet {
-//            resetVariables()
-        }
-    }
+    var totalQuestions: Int?
+    
     var advice: String?
-
+    var animationView: AnimationView?
+    var shouldDisplayConfetti: Bool = false
+    
     override func viewWillAppear(_ animated: Bool) {
         navigationController?.isNavigationBarHidden = true
     }
@@ -32,16 +33,7 @@ class ResultsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        guard let confettiImageView = UIImageView.fromGif(frame: view.frame, resourceName: "Confetti_Edited.gif") else { return }
-//         view.addSubview(confettiImageView)
-//         confettiImageView.startAnimating()
-//
-//        confettiImageView.animationDuration = 3
-//        confettiImageView.animationRepeatCount = 1
-//
-//        confettiImageView.animationImages = nil
-        
-        presentConfetti()
+//        presentConfetti()
         
         adviceLabel.adjustsFontSizeToFitWidth = true
         adviceLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -53,12 +45,12 @@ class ResultsViewController: UIViewController {
             
             adviceLabel.text = advice
             
-            if advice == "Wow, you are a trivia wiz!" {
+            if shouldDisplayConfetti {
                 presentConfetti()
             }
             
         } else {
-            adviceLabel.text = "Something went wrong while processing the results! Please check later."
+            adviceLabel.text = "Something went wrong while processing \nthe results! Please check later."
         }
         
         homeButton.layer.cornerRadius = homeButton.frame.size.height/2
@@ -74,7 +66,8 @@ class ResultsViewController: UIViewController {
         
         switch percentage {
         case 80...100:
-            return "Wow, you are a trivia wiz!"
+            shouldDisplayConfetti = true
+            return "Wow, you are a trivia wiz! \nYou seem to know a lot of random facts! 👍"
         case 50...79:
             return "Not bad - maybe you should spend a \nbit more time on Wikipedia, though."
         case 0...49:
@@ -85,15 +78,30 @@ class ResultsViewController: UIViewController {
     }
     
     func presentConfetti() {
-        guard let confettiImageView = UIImageView.fromGif(frame: view.frame, resourceName: "Confetti") else { return }
         
-        view.addSubview(confettiImageView)
-        confettiImageView.startAnimating()
+        animationView = .init(name: "another_another_confetti")
+        animationView!.frame = view.bounds
 
-        confettiImageView.animationDuration = 3
-        confettiImageView.animationRepeatCount = 1
+        // 3. Set animation content mode
 
-        confettiImageView.animationImages = nil
+        animationView!.contentMode = .scaleAspectFill
+
+        // 4. Set animation loop mode
+
+        animationView!.loopMode = .playOnce
+
+        // 5. Adjust animation speed
+
+        animationView!.animationSpeed = 1.0
+
+        view.addSubview(animationView!)
+        view.sendSubviewToBack(animationView!)
+        
+        // 6. Play animation
+
+        animationView!.play()
+        
+        
     }
     
     @IBAction func homeButtonClicked(_ sender: UIButton) {
