@@ -6,37 +6,35 @@
 //
 
 import UIKit
+import JellyGif
 
 class SettingsViewController: UIViewController {
+    
      // IB Outlets
     @IBOutlet weak var numberQuestions: UILabel!
     @IBOutlet weak var timePerQuestion: UILabel!
     @IBOutlet weak var questionSlider: UISlider!
     @IBOutlet weak var timeSlider: UISlider!
     @IBOutlet weak var startQuizButton: UIButton!
+    @IBOutlet weak var errorMessageLabel: UILabel!
+    @IBOutlet weak var stackViewTopConstraint: NSLayoutConstraint!
     
     var catName: String?
     
-    var categoriesColors: [String: UIColor] = [
-        "Random": UIColor(red: 176/255, green: 193/255, blue: 201/255, alpha: 1),
-        "Computers": UIColor(red: 84/255, green: 84/255, blue: 84/255, alpha: 1),
-        "Art": UIColor(red: 255/255, green: 22/255, blue: 22/255, alpha: 1),
-        "History": UIColor(red: 178/255, green: 153/255, blue: 119/255, alpha: 1),
-        "Math": UIColor(red: 155/255, green: 205/255, blue: 222/255, alpha: 1),
-        "Science": UIColor(red: 0/255, green: 128/255, blue: 55/255, alpha: 1),
-        "Sports": UIColor(red: 254/255, green: 145/255, blue: 77/255, alpha: 1),
-        "Entertainment": UIColor(red: 140/255, green: 82/255, blue: 255/255, alpha: 1)
-    ]
+    let networkMonitor = NetworkMonitor()
+    let sharedTriviaInfo = TriviaInfo.shared
     
     
     override func viewWillAppear(_ animated: Bool) {
         
-        self.title = categoryName
+        self.title = sharedTriviaInfo.categoryName
         
-        categoryColor = categoriesColors[categoryName!]
+        sharedTriviaInfo.categoryColor = sharedTriviaInfo.categoriesColors[sharedTriviaInfo.categoryName!]
         
+        networkMonitor.delegate = self
+        networkMonitor.startMonitoring()
         
-        if let safeColor = categoryColor {
+        if let safeColor = TriviaInfo.shared.categoryColor {
             navigationController?.navigationBar.barTintColor = safeColor
         }
         
@@ -48,33 +46,74 @@ class SettingsViewController: UIViewController {
         startQuizButton.layer.cornerRadius = startQuizButton.frame.size.height/2
         startQuizButton.layer.masksToBounds = true
         
-        questionSlider.value = Float(numberOfQuestions)
+        let numberOfQuestions = TriviaInfo().numberOfQuestions
+        let timeForQuestion = TriviaInfo().timeForQuestion
+        
+        numberQuestions.text = String(numberOfQuestions) 
+        timePerQuestion.text = String(timeForQuestion)
+        
         timeSlider.value = Float(timeForQuestion)
+        questionSlider.value = Float(numberOfQuestions)
         
     }
     
     
     override func viewWillDisappear(_ animated: Bool) {
         navigationController?.navigationBar.barTintColor = UIColor(red: 119/255, green: 172/255, blue: 241/255, alpha: 0.85)
+        errorMessageLabel.isHidden = true
+        
+        networkMonitor.stopMonitoring()
     }
     
     @IBAction func questionSliderChanged(_ sender: UISlider) {
         
-        numberOfQuestions = Int(sender.value)
-        numberQuestions.text = String(numberOfQuestions)
+        sharedTriviaInfo.numberOfQuestions = Int(sender.value)
+        numberQuestions.text = String(sharedTriviaInfo.numberOfQuestions)
         
     }
     
     @IBAction func timeSliderChanged(_ sender: UISlider) {
         
-        timeForQuestion = Int(sender.value)
-        timePerQuestion.text = String(timeForQuestion)
+        sharedTriviaInfo.timeForQuestion = Int(sender.value)
+        timePerQuestion.text = String(sharedTriviaInfo.timeForQuestion)
         
     }
     
     @IBAction func startQuizClicked(_ sender: UIButton) {
         
         self.performSegue(withIdentifier: "SettingsToCountdown", sender: self)
+        
+    }
+    
+}
+
+extension SettingsViewController: NetworkMonitorDelegate {
+    
+    func connectedToInternet() {
+        stackViewTopConstraint.constant = 29
+        errorMessageLabel.isHidden = true
+        startQuizButton.isEnabled = true
+    }
+    
+    func notConnectedToInternet() {
+        
+        stackViewTopConstraint.constant = 50
+        errorMessageLabel.isHidden = false
+        startQuizButton.isEnabled = false
+        
+        
+        let errorMessage = "No internet connection. Please try again later "
+        
+        let imageAttachment = NSTextAttachment()
+        imageAttachment.image = UIImage(systemName: "wifi.exclamationmark")?.withTintColor(.white)
+        imageAttachment.bounds = CGRect(x: 0, y: -5.0, width: imageAttachment.image!.size.width, height: imageAttachment.image!.size.height)
+        
+        let fullString = NSMutableAttributedString(string: errorMessage)
+        fullString.append(NSAttributedString(attachment: imageAttachment))
+        
+        
+        
+        errorMessageLabel.attributedText = fullString
         
     }
     

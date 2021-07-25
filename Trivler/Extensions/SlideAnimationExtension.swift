@@ -30,7 +30,7 @@ extension UIView {
         self.layer.add(slideInFromRightTransition, forKey: "slideInFromRightTransition")
     }
     
-    func slideProgress(_ duration: TimeInterval = 1.0, completionDelegate: CAAnimationDelegate? = nil) {
+    func slideProgressHorizontal(_ duration: TimeInterval = 1.0, completionDelegate: CAAnimationDelegate? = nil) {
         // Create a CATransition animation
         let slideInFromRightTransition = CATransition()
         
@@ -47,7 +47,47 @@ extension UIView {
         slideInFromRightTransition.fillMode = CAMediaTimingFillMode.forwards
         
         // Add the animation to the View's layer
-        self.layer.add(slideInFromRightTransition, forKey: "slideProgress")
+        self.layer.add(slideInFromRightTransition, forKey: "slideProgressHorizontal")
     }
+    
+    func slideInFromTop(_ duration: TimeInterval = 1.0, completionDelegate: CAAnimationDelegate? = nil) {
+        // Create a CATransition animation
+        let slideInFromRightTransition = CATransition()
+        
+        // Set its callback delegate to the completionDelegate that was provided (if any)
+        if let delegate: CAAnimationDelegate = completionDelegate {
+            slideInFromRightTransition.delegate = delegate
+        }
+        
+        // Customize the animation's properties
+        slideInFromRightTransition.type = CATransitionType.push
+        slideInFromRightTransition.subtype = CATransitionSubtype.fromTop
+        slideInFromRightTransition.duration = duration
+        slideInFromRightTransition.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
+        slideInFromRightTransition.fillMode = CAMediaTimingFillMode.removed
+        
+        // Add the animation to the View's layer
+        self.layer.add(slideInFromRightTransition, forKey: "slideInFromTopTransition")
+    }
+    
+//    func slideProgressVertical(_ duration: TimeInterval = 1.0, completionDelegate: CAAnimationDelegate? = nil) {
+//        // Create a CATransition animation
+//        let slideInFromRightTransition = CATransition()
+//        
+//        // Set its callback delegate to the completionDelegate that was provided (if any)
+//        if let delegate: CAAnimationDelegate = completionDelegate {
+//            slideInFromRightTransition.delegate = delegate
+//        }
+//        
+//        // Customize the animation's properties
+//        slideInFromRightTransition.type = CATransitionType.moveIn
+//        slideInFromRightTransition.subtype = CATransitionSubtype.fromLeft
+//        slideInFromRightTransition.duration = duration
+//        slideInFromRightTransition.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
+//        slideInFromRightTransition.fillMode = CAMediaTimingFillMode.forwards
+//        
+//        // Add the animation to the View's layer
+//        self.layer.add(slideInFromRightTransition, forKey: "slideProgressVertical")
+//    }
     
 }

@@ -25,28 +25,30 @@ class QuizViewController: UIViewController {
     
     var score = 0
     
-    var timeRemaining: Int = timeForQuestion
+    var timeRemaining: Int = TriviaInfo.shared.timeForQuestion
     var timer: Timer!
     
-    var barTimeRemaining: Float = Float(timeForQuestion)
+    var barTimeRemaining: Float = Float(TriviaInfo.shared.timeForQuestion)
     var barTimer: Timer!
+    
+    let sharedTriviaInfo = TriviaInfo.shared
     
     override func viewWillAppear(_ animated: Bool) {
         
         print(questionNumber)
         
-        scoreLabel.text = "Score: \(score)/\(numberOfQuestions)"
+        scoreLabel.text = "Score: \(score)/\(sharedTriviaInfo.numberOfQuestions)"
         
         self.displayQuestion(question: (self.triviaQuestions?[self.questionNumber - 1].question)!)
         self.changeOptions(answerChoices: (self.triviaQuestions?[self.questionNumber - 1].options)!)
         
         progressBar.progress = Float(questionNumber) - 1.0
         
-        if let safeName = categoryName {
+        if let safeName = sharedTriviaInfo.categoryName {
             self.title = "\(safeName) Trivia!"
         }
         
-        if let safeColor = categoryColor {
+        if let safeColor = sharedTriviaInfo.categoryColor {
             navigationController?.navigationBar.barTintColor = safeColor
         }
         
@@ -96,7 +98,7 @@ class QuizViewController: UIViewController {
         if segue.identifier == "QuizToResults" {
             let destinationVC = segue.destination as! ResultsViewController
             destinationVC.numberCorrect = score
-            destinationVC.totalQuestions = numberOfQuestions
+            destinationVC.totalQuestions = sharedTriviaInfo.numberOfQuestions
             self.endTimers()
         }
         
@@ -132,7 +134,7 @@ class QuizViewController: UIViewController {
         
         displayIcon(iconName, location: touchPosition!, seconds: animationTime)
         changeButton(sender, bgColor: buttonColor, seconds: animationTime)
-        scoreLabel.text = "Score: \(score)/\(numberOfQuestions)"
+        scoreLabel.text = "Score: \(score)/\(sharedTriviaInfo.numberOfQuestions)"
         
         DispatchQueue.main.asyncAfter(deadline: .now() + animationTime - fadeTime) {
             self.setUpForNextQuestion()
@@ -153,7 +155,7 @@ class QuizViewController: UIViewController {
         refreshAlert.addAction(UIAlertAction(title: "Exit", style: .default, handler: { (action: UIAlertAction!) in
             
             self.endTimers()
-            resetVariables()
+            self.sharedTriviaInfo.resetVariables()
             
             let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
             let vc = mainStoryboard.instantiateViewController(withIdentifier: "HomeScreenViewController") as! HomeScreenViewController
@@ -227,22 +229,31 @@ class QuizViewController: UIViewController {
         
         questionNumber += 1
         
-        UIView.animate(withDuration: animationTime, animations: {
-            self.progressBar.setProgress((Float(self.questionNumber - 1)) / Float(numberOfQuestions), animated: true)
-        }) { (finished) in
-            if self.questionNumber - 1 < numberOfQuestions {
+        UIView.animate(withDuration: animationTime, animations: { [self] in
+            progressBar.setProgress((Float(questionNumber - 1)) / Float(sharedTriviaInfo.numberOfQuestions), animated: true)
+            
+            timeRemainingCircle.color = .green
+            timeRemaining = sharedTriviaInfo.timeForQuestion
+            
+            barTimeRemaining = Float(sharedTriviaInfo.timeForQuestion)
+            timeRemainingLabel.text = String(timeRemaining)
+            
+            timeRemainingCircle.progress = 1.0
+            
+        }) { [self] (finished) in
+            if questionNumber - 1 < sharedTriviaInfo.numberOfQuestions {
                 
-                self.startTimer()
-                self.displayQuestion(question: (self.triviaQuestions?[self.questionNumber - 1].question)!, transitionTime: 0.5)
-                self.changeOptions(answerChoices: (self.triviaQuestions?[self.questionNumber - 1].options)!)
+                startTimer()
+                displayQuestion(question: (triviaQuestions?[questionNumber - 1].question)!, transitionTime: 0.5)
+                changeOptions(answerChoices: (triviaQuestions?[questionNumber - 1].options)!)
                 
             } else {
-                self.options.forEach { $0.isEnabled = false }
+                options.forEach { $0.isEnabled = false }
                 UIView.animate(withDuration: animationTime, animations: {
-                    self.progressBar.setProgress(1.0, animated: true)
+                    progressBar.setProgress(1.0, animated: true)
                 }) { (finished) in
                     DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                        self.performSegue(withIdentifier: "QuizToResults", sender: self)
+                        performSegue(withIdentifier: "QuizToResults", sender: self)
                     }
                 }
             }
@@ -253,15 +264,16 @@ class QuizViewController: UIViewController {
     func startTimer() {
         
         timeRemainingCircle.color = .green
-        timeRemaining = timeForQuestion
+        timeRemaining = sharedTriviaInfo.timeForQuestion
         
-        barTimeRemaining = Float(timeForQuestion)
+        barTimeRemaining = Float(sharedTriviaInfo.timeForQuestion)
         timeRemainingLabel.text = String(timeRemaining)
         
         timeRemainingCircle.progress = 1.0
         
-        timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(step), userInfo: nil, repeats: true)
         barTimer = Timer.scheduledTimer(timeInterval: 0.01, target: self, selector: #selector(stepBar), userInfo: nil, repeats: true)
+        
+        timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(step), userInfo: nil, repeats: true)
         
     }
     
@@ -275,8 +287,9 @@ class QuizViewController: UIViewController {
             
         } else {
             timer.invalidate()
-            revealCorrectAnswer()
-            setUpForNextQuestion()
+            revealCorrectAnswer() {
+                self.setUpForNextQuestion()
+            }
         }
         
     }
@@ -286,7 +299,7 @@ class QuizViewController: UIViewController {
         if barTimeRemaining > 0 {
 
             barTimeRemaining -= 0.01
-            timeRemainingCircle.progress = CGFloat(barTimeRemaining) / CGFloat(timeForQuestion)
+            timeRemainingCircle.progress = CGFloat(barTimeRemaining) / CGFloat(sharedTriviaInfo.timeForQuestion)
 
         } else {
             barTimer.invalidate()
@@ -298,11 +311,13 @@ class QuizViewController: UIViewController {
         
     }
     
-    func revealCorrectAnswer(incorrectButton: UIButton? = nil, touchCoordinates: CGPoint? = nil, animationTime: Double = 2.0) {
+    func revealCorrectAnswer(incorrectButton: UIButton? = nil, touchCoordinates: CGPoint? = nil, animationTime: Double = 2.0, completion: @escaping (() -> Void) = {  }) {
         
         let correctAnswerButton = getCorrectButton()
         
         var exactLocation: CGPoint
+        
+        options.forEach { $0.isEnabled = false }
         
         if let safeButton = correctAnswerButton {
             
@@ -312,6 +327,10 @@ class QuizViewController: UIViewController {
             
             displayIcon("checkmark", location: exactLocation, seconds: animationTime)
             changeButton(safeButton, bgColor: .green, seconds: animationTime)
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + animationTime) {
+                completion()
+            }
             
         } else {
             print("Could not find correct answer!")

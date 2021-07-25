@@ -1,44 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="cbb-C7-3lf">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
-        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
-        <scene sceneID="EHf-IW-A2E">
+        <scene sceneID="dO0-oN-Xqs">
             <objects>
-                <viewController id="01J-lp-oVM" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
+                <viewController id="cbb-C7-3lf" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="km0-4z-aTZ">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="TrivlerAppGradient2" translatesAutoresizingMaskIntoConstraints="NO" id="t8e-nR-mEO">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="TrivlerGradient" translatesAutoresizingMaskIntoConstraints="NO" id="YLD-bs-HOK">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <gestureRecognizers/>
+                            </imageView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="TrivlerLogo_Transparent" translatesAutoresizingMaskIntoConstraints="NO" id="oUS-w3-lH0">
+                                <rect key="frame" x="-43" y="324" width="500" height="248"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="248" id="AZ3-cT-WW3"/>
+                                </constraints>
                             </imageView>
                         </subviews>
-                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <viewLayoutGuide key="safeArea" id="HcO-wK-vFQ"/>
+                        <gestureRecognizers/>
                         <constraints>
-                            <constraint firstItem="t8e-nR-mEO" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="2bb-Xn-0ME"/>
-                            <constraint firstItem="t8e-nR-mEO" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="top" id="EXV-fD-VoK"/>
-                            <constraint firstItem="t8e-nR-mEO" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="Fww-CK-wai"/>
-                            <constraint firstAttribute="bottom" secondItem="t8e-nR-mEO" secondAttribute="bottom" id="IHC-eq-93o"/>
+                            <constraint firstAttribute="bottom" secondItem="YLD-bs-HOK" secondAttribute="bottom" id="AL1-5V-M8R"/>
+                            <constraint firstItem="YLD-bs-HOK" firstAttribute="trailing" secondItem="HcO-wK-vFQ" secondAttribute="trailing" id="DNE-Zq-uFY"/>
+                            <constraint firstItem="oUS-w3-lH0" firstAttribute="centerY" secondItem="km0-4z-aTZ" secondAttribute="centerY" id="Gfu-mc-hjK"/>
+                            <constraint firstItem="oUS-w3-lH0" firstAttribute="centerX" secondItem="km0-4z-aTZ" secondAttribute="centerX" id="jCg-Oq-giL"/>
+                            <constraint firstItem="YLD-bs-HOK" firstAttribute="leading" secondItem="HcO-wK-vFQ" secondAttribute="leading" id="tf2-U0-mDY"/>
+                            <constraint firstItem="YLD-bs-HOK" firstAttribute="top" secondItem="km0-4z-aTZ" secondAttribute="top" id="wRR-YN-7hL"/>
                         </constraints>
                     </view>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="HS2-Bo-2aP" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="52.173913043478265" y="375"/>
+            <point key="canvasLocation" x="443.47826086956525" y="362.27678571428572"/>
         </scene>
     </scenes>
     <resources>
-        <image name="TrivlerAppGradient2" width="428" height="928"/>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
+        <image name="TrivlerGradient" width="426" height="476"/>
+        <image name="TrivlerLogo_Transparent" width="500" height="500"/>
     </resources>
 </document>

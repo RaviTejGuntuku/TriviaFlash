@@ -25,7 +25,6 @@ class PlainCircularProgressBar: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupLayers()
-
     }
 
     required init?(coder: NSCoder) {
@@ -38,7 +37,7 @@ class PlainCircularProgressBar: UIView {
         backgroundMask.fillColor = nil
         backgroundMask.strokeColor = UIColor.black.cgColor
         layer.mask = backgroundMask
-
+        
         progressLayer.lineWidth = ringWidth
         progressLayer.fillColor = nil
         layer.addSublayer(progressLayer)

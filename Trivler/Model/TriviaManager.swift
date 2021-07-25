@@ -22,7 +22,7 @@ struct TriviaManager {
     func fetchQuestions () {
         
         var categoryID: Int {
-            switch categoryName {
+            switch TriviaInfo.shared.categoryName {
             case "Random":
                 return 0
             case "Computers":
@@ -44,7 +44,7 @@ struct TriviaManager {
             }
         }
         
-        let urlString = "\(triviaDatabaseURL)&amount=\(numberOfQuestions)&category=\(categoryID)"
+        let urlString = "\(triviaDatabaseURL)&amount=\(TriviaInfo.shared.numberOfQuestions)&category=\(categoryID)"
         performRequest(with: urlString)
         
     }
