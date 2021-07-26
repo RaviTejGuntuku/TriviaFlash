@@ -158,7 +158,7 @@ class QuizViewController: UIViewController {
             self.sharedTriviaInfo.resetVariables()
             
             let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-            let vc = mainStoryboard.instantiateViewController(withIdentifier: "HomeScreenViewController") as! HomeScreenViewController
+            let vc = mainStoryboard.instantiateViewController(withIdentifier: "CategoryViewController") as! CategoryViewController
             self.navigationController?.pushViewController(vc, animated: true)
             
           }))

@@ -17,7 +17,6 @@
 		03AE2F272688FDAD00FC2733 /* QuizViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AE2F252688FDAD00FC2733 /* QuizViewController.swift */; };
 		03AE2F2E26893CDD00FC2733 /* TriviaGlobalInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AE2F2D26893CDD00FC2733 /* TriviaGlobalInfo.swift */; };
 		03C6883F267FC47000C2B760 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03C6883E267FC47000C2B760 /* SceneDelegate.swift */; };
-		03C68841267FC47000C2B760 /* HomeScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03C68840267FC47000C2B760 /* HomeScreenViewController.swift */; };
 		03C68844267FC47000C2B760 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 03C68842267FC47000C2B760 /* Main.storyboard */; };
 		03C68846267FC47200C2B760 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 03C68845267FC47200C2B760 /* Assets.xcassets */; };
 		03C68849267FC47200C2B760 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 03C68847267FC47200C2B760 /* LaunchScreen.storyboard */; };
@@ -32,6 +31,7 @@
 		03EBD913268E4567003E6EBC /* TriviaManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03EBD912268E4567003E6EBC /* TriviaManager.swift */; };
 		03EBD915268E78DF003E6EBC /* TriviaData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03EBD914268E78DF003E6EBC /* TriviaData.swift */; };
 		03EBD917268E8254003E6EBC /* TriviaModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03EBD916268E8254003E6EBC /* TriviaModel.swift */; };
+		03F3C9D426AE80C100C4AB7E /* LogoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03F3C9D326AE80C100C4AB7E /* LogoViewController.swift */; };
 		03FE9D7B2684FDB60089FEA0 /* SF-Pro-Text-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 03FE9D492684FCB50089FEA0 /* SF-Pro-Text-Regular.otf */; };
 		03FE9D7C2684FDB60089FEA0 /* SF-Pro-Text-BlackItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 03FE9D542684FCB60089FEA0 /* SF-Pro-Text-BlackItalic.otf */; };
 		03FE9D7D2684FDB60089FEA0 /* SF-Pro-Text-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 03FE9D562684FCB60089FEA0 /* SF-Pro-Text-Light.otf */; };
@@ -127,7 +127,6 @@
 		03AE2F2D26893CDD00FC2733 /* TriviaGlobalInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TriviaGlobalInfo.swift; sourceTree = "<group>"; };
 		03C68839267FC47000C2B760 /* Trivler.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Trivler.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		03C6883E267FC47000C2B760 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		03C68840267FC47000C2B760 /* HomeScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeScreenViewController.swift; sourceTree = "<group>"; };
 		03C68843267FC47000C2B760 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		03C68845267FC47200C2B760 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		03C68848267FC47200C2B760 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -148,6 +147,7 @@
 		03EBD912268E4567003E6EBC /* TriviaManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TriviaManager.swift; sourceTree = "<group>"; };
 		03EBD914268E78DF003E6EBC /* TriviaData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TriviaData.swift; sourceTree = "<group>"; };
 		03EBD916268E8254003E6EBC /* TriviaModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TriviaModel.swift; sourceTree = "<group>"; };
+		03F3C9D326AE80C100C4AB7E /* LogoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogoViewController.swift; sourceTree = "<group>"; };
 		03FE9D452684FCB50089FEA0 /* SF-Pro-Text-HeavyItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "SF-Pro-Text-HeavyItalic.otf"; path = "../../../../../../SF Pro Text/SF Pro Text/SF-Pro-Text-HeavyItalic.otf"; sourceTree = "<group>"; };
 		03FE9D462684FCB50089FEA0 /* SF-Pro-Text-Black.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "SF-Pro-Text-Black.otf"; path = "../../../../../../SF Pro Text/SF Pro Text/SF-Pro-Text-Black.otf"; sourceTree = "<group>"; };
 		03FE9D472684FCB50089FEA0 /* SF-Pro-Text-RegularItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "SF-Pro-Text-RegularItalic.otf"; path = "../../../../../../SF Pro Text/SF Pro Text/SF-Pro-Text-RegularItalic.otf"; sourceTree = "<group>"; };
@@ -245,8 +245,8 @@
 		031DA8C2268132E100863C6F /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				03C68840267FC47000C2B760 /* HomeScreenViewController.swift */,
 				03A8D69F2688E85200CDA027 /* CountdownViewController.swift */,
+				03F3C9D326AE80C100C4AB7E /* LogoViewController.swift */,
 				035B5DA3269DE664007AE98E /* ResultsViewController.swift */,
 				03AE2F252688FDAD00FC2733 /* QuizViewController.swift */,
 				03930C54268616610022BC8C /* SettingsViewController.swift */,
@@ -684,12 +684,12 @@
 			files = (
 				03EBD913268E4567003E6EBC /* TriviaManager.swift in Sources */,
 				03A8D6A02688E85200CDA027 /* CountdownViewController.swift in Sources */,
+				03F3C9D426AE80C100C4AB7E /* LogoViewController.swift in Sources */,
 				039D8AD6268BBEEB00498AE5 /* CenterCGRect.swift in Sources */,
 				03EBD8FE268CB09D003E6EBC /* SlideAnimationExtension.swift in Sources */,
 				03EBD915268E78DF003E6EBC /* TriviaData.swift in Sources */,
 				03AE2F272688FDAD00FC2733 /* QuizViewController.swift in Sources */,
 				031DA8C62681336A00863C6F /* CategoryViewController.swift in Sources */,
-				03C68841267FC47000C2B760 /* HomeScreenViewController.swift in Sources */,
 				035B5DA4269DE664007AE98E /* ResultsViewController.swift in Sources */,
 				03C9B4DF26A5F350000489CD /* AlignToBottom.swift in Sources */,
 				03EBD917268E8254003E6EBC /* TriviaModel.swift in Sources */,

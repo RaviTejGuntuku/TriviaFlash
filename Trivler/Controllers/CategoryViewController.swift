@@ -32,6 +32,12 @@ class CategoryViewController: UIViewController {
 //        errorMessageLabel.isHidden = true
 //        scrollViewTopConstraint.constant = 15
         
+        
+        
+        self.navigationItem.setHidesBackButton(true, animated: false)
+        
+//        navigationController?.navigationItem.topItem.leftBarButtonItem = nil
+        
         networkMonitor.startMonitoring()
         self.categoryButtons.forEach { $0.layer.cornerRadius = 10 }
         self.categoryButtons.forEach { $0.layer.masksToBounds = true }
