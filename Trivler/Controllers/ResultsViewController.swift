@@ -11,10 +11,11 @@ import Lottie
 
 class ResultsViewController: UIViewController {
     
+    
     @IBOutlet weak var homeButton: UIButton!
+    @IBOutlet weak var retryButton: UIButton!
     @IBOutlet weak var resultLabel: UILabel!
     @IBOutlet weak var adviceLabel: UILabel!
-    @IBOutlet weak var retryButton: UIButton!
     @IBOutlet weak var shareButton: UIButton!
     @IBOutlet var tappableView: UIView!
     

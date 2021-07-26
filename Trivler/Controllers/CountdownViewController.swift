@@ -123,21 +123,6 @@ class CountdownViewController: UIViewController {
             
             self.performSegue(withIdentifier: "CountdownToQuiz", sender: self)
             
-        } else if segueStatus == .waitingForData && timer.isValid == false {
-            
-            // Tell user that fetching questions is taking longer than expected ...
-            
-            let errorMessage = "Question fetching is taking longer than expected. Please wait"
-            let imageAttachment = NSTextAttachment()
-            imageAttachment.image = UIImage(systemName: "exclamationmark.arrow.triangle.2.circlepath")?.withTintColor(.white)
-            imageAttachment.bounds = CGRect(x: 0, y: -5.0, width: imageAttachment.image!.size.width, height: imageAttachment.image!.size.height)
-            
-            let fullString = NSMutableAttributedString(string: errorMessage)
-            fullString.append(NSAttributedString(attachment: imageAttachment))
-            
-            errorMessageLabel.attributedText = fullString
-            errorMessageLabel.isHidden = false
-            
         } else if segueStatus == .notConnectedToInternet {
             
             // Using the error message label, inform user about internet connectivity 
@@ -153,6 +138,25 @@ class CountdownViewController: UIViewController {
             
             errorMessageLabel.attributedText = fullString
             errorMessageLabel.isHidden = false
+            
+        } else if segueStatus == .waitingForData && timer.isValid == false {
+            
+            // Tell user that fetching questions is taking longer than expected ...
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 12) {
+                
+                let errorMessage = "Question fetching is taking longer than expected. Please wait"
+                let imageAttachment = NSTextAttachment()
+                imageAttachment.image = UIImage(systemName: "exclamationmark.arrow.triangle.2.circlepath")?.withTintColor(.white)
+                imageAttachment.bounds = CGRect(x: 0, y: -5.0, width: imageAttachment.image!.size.width, height: imageAttachment.image!.size.height)
+                
+                let fullString = NSMutableAttributedString(string: errorMessage)
+                fullString.append(NSAttributedString(attachment: imageAttachment))
+                
+                self.errorMessageLabel.attributedText = fullString
+                self.errorMessageLabel.isHidden = false
+                
+            }
             
         } else if segueStatus == .failedWithError {
            

@@ -11,7 +11,6 @@ import Network
 class CategoryViewController: UIViewController {
     
     @IBOutlet var categoryButtons: [UIButton]!
-    @IBOutlet weak var nextButton: UIBarButtonItem!
     @IBOutlet weak var scrollViewTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var errorMessageLabel: UILabel!
     
@@ -56,33 +55,19 @@ class CategoryViewController: UIViewController {
     @IBAction func categoryButtonClicked(_ sender: UIButton) {
         
         if networkMonitor.connectedToInternet {
-            nextButton.isEnabled = true
+            
+            TriviaInfo.shared.categoryName = (sender.titleLabel?.text)!
+            print(TriviaInfo.shared.categoryName!)
+            self.performSegue(withIdentifier: "CategoriesToSettings", sender: self)
+            
         } else {
-            nextButton.isEnabled = false
             return
         }
         
-        previousCategory?.layer.borderWidth = 0
-        
-        sender.layer.borderWidth = 5
-        sender.layer.borderColor = .init(red: 84/255, green: 117/255, blue: 245/255, alpha: 1)
-        
-        // Include sound recording here
-        
-        sender.layer.masksToBounds = true
-        
-        previousCategory = sender
-        
-        TriviaInfo.shared.categoryName = (sender.titleLabel?.text)!
-        
-        print(TriviaInfo.shared.categoryName!)
-        
     }
     
-    @IBAction func nextButton(_ sender: UIBarButtonItem) {
-        
-        self.performSegue(withIdentifier: "CategoriesToSettings", sender: self)
-        
+    override func viewDidAppear(_ animated: Bool) {
+        networkMonitor.startMonitoring()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -97,16 +82,12 @@ extension CategoryViewController: NetworkMonitorDelegate {
     
     func connectedToInternet() {
         
-        previousCategory?.layer.borderWidth = 5
+//        previousCategory?.layer.borderWidth = 5
         
         errorMessageLabel.isHidden = true
         scrollViewTopConstraint.constant = 15
         
-        if previousCategory != nil {
-            nextButton.isEnabled = true
-        }
         
-        scrollViewTopConstraint.constant = 15
     }
     
     func notConnectedToInternet() {
@@ -120,8 +101,8 @@ extension CategoryViewController: NetworkMonitorDelegate {
         let fullString = NSMutableAttributedString(string: errorMessage)
         fullString.append(NSAttributedString(attachment: imageAttachment))
         
-        previousCategory?.layer.borderWidth = 0
-        nextButton.isEnabled = false
+//        previousCategory?.layer.borderWidth = 0
+        
         errorMessageLabel.attributedText = fullString
         
         
