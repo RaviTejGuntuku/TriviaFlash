@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "Trivler_App_Gradient.png",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}
