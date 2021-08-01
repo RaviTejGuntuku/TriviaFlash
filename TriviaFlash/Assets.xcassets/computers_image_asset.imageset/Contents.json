@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "computers_image_asset.png",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}
